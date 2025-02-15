@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Stock Data Update Script
         run: python update_stock_data.py
-
+        
       - name: Commit and Push Data Changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,5 +41,8 @@ jobs:
           git add .
           # Commit changes (if any)
           git commit -m "Update stock historical data [skip ci]" || echo "No changes to commit"
+          # Pull remote changes to ensure our branch is up to date
+          git pull --rebase origin main || echo "No remote changes to rebase"
           # Push changes back to the repository
           git push
+
