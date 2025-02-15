@@ -1,0 +1,43 @@
+name: Update Stock Historical Data
+
+on:
+  # Schedule to run daily at midnight UTC; adjust the cron expression as desired
+  schedule:
+    - cron: '0 0 * * *'
+  # Allow manual triggering as well
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas
+
+      - name: Run Stock Data Update Script
+        run: python update_stock_data.py
+
+      - name: Commit and Push Data Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configure git for the GitHub Actions bot
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          # Stage any changes (if there are updates in the data folder)
+          git add .
+          # Commit with a message. The [skip ci] tag prevents triggering another pipeline run.
+          git commit -m "Update stock historical data [skip ci]" || echo "No changes to commit"
+          # Push the commit back to the repository
+          git push
