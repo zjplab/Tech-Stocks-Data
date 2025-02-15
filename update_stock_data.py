@@ -7,17 +7,17 @@ import logging
 # Configure logging to display timestamped messages
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def update_stock_data(ticker: str, folder: str, period: str = "5y", interval: str = "1d"):
+def update_stock_data(ticker: str, folder: str, period: str = "max", interval: str = "1d"):
     """
     Fetch historical data for the given ticker and save it as a CSV file in the specified folder.
 
     Parameters:
       ticker (str): The stock ticker symbol.
       folder (str): The folder where the CSV file will be saved.
-      period (str): The time period of data to retrieve (default "5y" for 5 years).
+      period (str): The time period of data to retrieve (default "max" for all available data).
       interval (str): The data interval (default "1d" for daily data).
     """
-    logging.info(f"Fetching data for {ticker}")
+    logging.info(f"Fetching data for {ticker} with period={period} and interval={interval}")
     try:
         data = yf.download(ticker, period=period, interval=interval)
         if data.empty:
