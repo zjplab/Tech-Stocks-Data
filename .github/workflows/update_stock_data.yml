@@ -1,11 +1,12 @@
 name: Update Stock Historical Data
 
 on:
-  # Schedule to run daily at midnight UTC; adjust the cron expression as desired
   schedule:
     - cron: '0 0 * * *'
-  # Allow manual triggering as well
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-data:
@@ -14,6 +15,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # Ensures the token is kept for subsequent push operations
 
       - name: Set up Python Environment
         uses: actions/setup-python@v5
@@ -35,9 +38,8 @@ jobs:
           # Configure git for the GitHub Actions bot
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          # Stage any changes (if there are updates in the data folder)
           git add .
-          # Commit with a message. The [skip ci] tag prevents triggering another pipeline run.
+          # Commit changes (if any)
           git commit -m "Update stock historical data [skip ci]" || echo "No changes to commit"
-          # Push the commit back to the repository
+          # Push changes back to the repository
           git push
