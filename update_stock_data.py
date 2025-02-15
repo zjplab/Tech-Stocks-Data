@@ -7,7 +7,7 @@ import logging
 # Configure logging to display timestamped messages
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def update_stock_data(ticker: str, folder: str, period: str = "max", interval: str = "1d"):
+def update_stock_data(ticker: str, folder: str, period: str = "max", interval: str = "1h"):
     """
     Fetch historical data for the given ticker and save it as a CSV file in the specified folder.
 
