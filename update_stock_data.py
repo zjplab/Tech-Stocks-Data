@@ -15,7 +15,7 @@ def update_stock_data(ticker: str, folder: str, period: str = "max", interval: s
       ticker (str): The stock ticker symbol.
       folder (str): The folder where the CSV file will be saved.
       period (str): The time period of data to retrieve (default "max" for all available data).
-      interval (str): The data interval (default "1d" for daily data).
+      interval (str): The data interval (default "1h" for hourly data).
     """
     logging.info(f"Fetching data for {ticker} with period={period} and interval={interval}")
     try:
