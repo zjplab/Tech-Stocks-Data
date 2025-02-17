@@ -30,28 +30,29 @@ def update_stock_data(ticker: str, folder: str, period: str = "max", interval: s
         logging.error(f"Error fetching data for {ticker}: {e}")
 
 def main():
-    # Define the list of MAG7 stocks (modify these as needed)
-    mag7 = ["META", "AAPL", "GOOGL", "AMZN", "NFLX", "MSFT", "TSLA"]
+    # Define the list of NASDAQ 100 stocks
+    nasdaq_100 = [
+        "AAPL", "ABNB", "ADBE", "ADI", "ADP", "ADSK", "AEP", "AMAT", "AMD", "AMGN", "AMZN", "ANSS", "APP", "ARM", "ASML", "AVGO", "AXON", "AZN", "BIIB", "BKNG", "BKR", "CCEP", "CDNS", "CDW", "CEG", "CHTR", "CMCSA", "COST", "CPRT", "CRWD", "CSCO", "CSGP", "CSX", "CTAS", "CTSH", "DASH", "DDOG", "DXCM", "EA", "EXC", "FANG", "FAST", "FTNT", "GEHC", "GFS", "GILD", "GOOG", "GOOGL", "HON", "IDXX", "INTC", "INTU", "ISRG", "KDP", "KHC", "KLAC", "LIN", "LRCX", "LULU", "MAR", "MCHP", "MDB", "MDLZ", "MELI", "META", "MNST", "MRVL", "MSFT", "MSTR", "MU", "NFLX", "NVDA", "NXPI", "ODFL", "ON", "ORLY", "PANW", "PAYX", "PCAR", "PDD", "PEP", "PLTR", "PYPL", "QCOM", "REGN", "ROP", "ROST", "SBUX", "SNPS", "TEAM", "TMUS", "TSLA", "TTD", "TTWO", "TXN", "VRSK", "VRTX", "WBD", "WDAY", "XEL", "ZS"
+    ]
     
-    # Define the list of top 20 Hang Seng Tech stocks (tickers may be adjusted)
+    # Define the list of Hang Seng Tech stocks
     hangseng_tech = [
-        "0700.HK", "9988.HK", "3690.HK", "1810.HK", "3692.HK",
-        "2018.HK", "6862.HK", "0762.HK", "2688.HK", "2388.HK",
-        "1109.HK", "1177.HK", "3888.HK", "1299.HK", "3388.HK",
-        "2380.HK", "0823.HK", "0763.HK", "2382.HK", "2318.HK"
+        "1810.HK", "9618.HK", "9988.HK", "0700.HK", "0981.HK", "3690.HK", "1024.HK", "2015.HK", "9999.HK", "9868.HK",
+        "9961.HK", "0992.HK", "6690.HK", "9888.HK", "2382.HK", "0020.HK", "9626.HK", "0300.HK", "3888.HK", "6618.HK",
+        "0285.HK", "0268.HK", "0780.HK", "0522.HK", "0241.HK", "1347.HK", "0772.HK", "9866.HK", "6060.HK", "1797.HK"
     ]
     
     # Create directories for storing data if they do not exist
-    os.makedirs("data/MAG7", exist_ok=True)
+    os.makedirs("data/NASDAQ100", exist_ok=True)
     os.makedirs("data/HangSengTech", exist_ok=True)
     
-    # Update historical data for MAG7 stocks
-    for ticker in mag7:
-        update_stock_data(ticker, "data/MAG7")
+    # Update historical data for NASDAQ 100 stocks
+    for ticker in nasdaq_100:
+        update_stock_data(ticker, "data/NASDAQ100", interval="1d")
     
     # Update historical data for Hang Seng Tech stocks
     for ticker in hangseng_tech:
-        update_stock_data(ticker, "data/HangSengTech")
+        update_stock_data(ticker, "data/HangSengTech", interval="1d")
     
 if __name__ == "__main__":
     main()
